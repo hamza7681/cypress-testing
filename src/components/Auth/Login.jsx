@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, {useState} from 'react';
 import {TextInput} from '../general/TextInput';
 import {useForm} from 'react-hook-form';
 import {yupResolver} from '@hookform/resolvers/yup';
@@ -11,6 +11,7 @@ import {useRouter} from 'next/navigation';
 import SelectInput from '../general/Select';
 
 const Login = () => {
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
   const {
     handleSubmit,
@@ -19,6 +20,7 @@ const Login = () => {
   } = useForm({resolver: yupResolver(loginSchema)});
 
   const onSubmit = async (data) => {
+    setLoading(true);
     try {
       const res = await axios.post(
         'http://localhost:3001/api/v1/users/login',
@@ -27,9 +29,11 @@ const Login = () => {
       if (res) {
         toast.success(res.data.message);
         router.push('/');
+        setLoading(false);
       }
     } catch (error) {
       toast.error(error.response.data.message);
+      setLoading(false);
     }
   };
 
@@ -54,9 +58,10 @@ const Login = () => {
         />
         <SelectInput />
         <button
-          className="w-full bg-blue-400 h-8 text-white"
+          className="w-full bg-blue-400 h-8 text-white disabled:opacity-[0.5]"
           type="submit"
           data-testid="loginButton"
+          disabled={loading}
         >
           Login
         </button>
