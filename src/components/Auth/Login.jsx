@@ -8,6 +8,7 @@ import {loginSchema} from '@/schemas/auth';
 import axios from 'axios';
 import {toast} from 'react-toastify';
 import {useRouter} from 'next/navigation';
+import SelectInput from '../general/Select';
 
 const Login = () => {
   const router = useRouter();
@@ -51,6 +52,7 @@ const Login = () => {
           placeholder="Enter your password"
           {...register('password')}
         />
+        <SelectInput />
         <button
           className="w-full bg-blue-400 h-8 text-white"
           type="submit"

@@ -9,6 +9,10 @@ describe('template spec', () => {
     cy.get('input[name=email]').type('hamzambf@gmail.com');
     cy.get("[data-testid='loginButton']").click();
     cy.get('input[name=password]').type('Abc123!abc');
+
+    cy.get('#demo-simple-select').click();
+    cy.contains('Twenty').click();
+
     cy.get("[data-testid='loginButton']").click();
     cy.url().should('include', '/');
     cy.wait(2000);
